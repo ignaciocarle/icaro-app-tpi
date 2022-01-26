@@ -1,0 +1,7 @@
+.header {
+  border-bottom: 3px black solid;
+}
+
+.header a {
+  text-decoration: none;
+}
