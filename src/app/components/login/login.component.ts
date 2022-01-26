@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from 'src/app/services/users.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -9,12 +10,12 @@ import { UsersService } from 'src/app/services/users.service';
 
 export class LoginComponent implements OnInit {
 
-  public username: String = "";
-  public password: String = "";
+  public username: string = "";
+  public password: string = "";
 
   allUsers: any = [];
 
-  constructor(private usersService: UsersService) { }
+  constructor(private usersService: UsersService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -24,10 +25,26 @@ export class LoginComponent implements OnInit {
       username: this.username,
       password: this.password
     };
-    this.usersService.login(user).subscribe((Response: any) => {
-      console.log(Response.message);
+
+    this.usersService.login(user).subscribe({
+      next: (Response: any) => {
+        if (Response.loginSuccesful === true) {
+          this.usersService.setCurrentUser(user.username)
+          this.router.navigateByUrl('/home')
+          console.log(Response.message);
+        } else {
+          console.log("ERROR");
+
+        }
+      }
     })
   }
+
+  public logout(): void {
+    this.usersService.clearCurrentUser()
+  }
+
+
 
   //TESTING
   public testGetUsers(): void {

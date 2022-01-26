@@ -9,12 +9,12 @@ import { UsersService } from 'src/app/services/users.service';
 
 export class RegisterComponent implements OnInit {
 
-  public username: String = "";
-  public firstName: String = "";
-  public lastName: String = "";
-  public password: String = "";
-  public country: String = "";
-  public city: String = "";
+  public username: string = "";
+  public firstName: string = "";
+  public lastName: string = "";
+  public password: string = "";
+  public country: string = "";
+  public city: string = "";
 
   constructor(private usersService: UsersService) { }
 
@@ -32,7 +32,10 @@ export class RegisterComponent implements OnInit {
     };
     this.usersService.registerUser(newUser).subscribe((Response: any) => {
       console.log(Response.users);
-    })
+    },
+      error => {
+        console.log(error);
+      })
   }
 
   //TESTING
