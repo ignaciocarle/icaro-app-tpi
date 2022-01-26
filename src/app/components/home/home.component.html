@@ -1,1 +1,11 @@
-<p>home works!</p>
+<div class="container">
+  <div class="p-4 d-flex flex-column align-items-center">
+    <h3 *ngIf="usersService.getCurrentUser()">
+      Welcome {{ usersService.getCurrentUser() }}!!!
+    </h3>
+
+    <h3 *ngIf="!usersService.getCurrentUser()">
+      Please <a routerLink="/login">login</a> to continue.
+    </h3>
+  </div>
+</div>

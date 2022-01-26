@@ -16,7 +16,7 @@ export class RegisterComponent implements OnInit {
   public country: string = "";
   public city: string = "";
 
-  constructor(private usersService: UsersService) { }
+  constructor(public usersService: UsersService) { }
 
   ngOnInit(): void {
   }
@@ -30,7 +30,7 @@ export class RegisterComponent implements OnInit {
       country: this.country,
       city: this.city
     };
-    this.usersService.registerUser(newUser).subscribe((Response: any) => {
+    this.usersService.registerUser(newUser).subscribe((Response: any) => {//cambiar sintaxis a next/error
       console.log(Response.users);
     },
       error => {

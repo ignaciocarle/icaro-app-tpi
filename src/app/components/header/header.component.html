@@ -8,8 +8,17 @@
       <a routerLink="/home" class="py-2 px-3">Home</a>
     </nav>
 
-    <div class="">
-      <button routerLink="/login" class="btn btn-primary">Login</button>
+    <div class="mx-3">
+      <button
+        routerLink="/login"
+        class="login-btn btn btn-primary"
+        *ngIf="!usersService.getCurrentUser()"
+      >
+        Login
+      </button>
+    </div>
+    <div class="mx-3" *ngIf="usersService.getCurrentUser()">
+      <button class="btn btn-primary" (click)="logout()">Logout</button>
     </div>
   </div>
 </header>

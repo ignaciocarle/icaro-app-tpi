@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
 
   allUsers: any = [];
 
-  constructor(private usersService: UsersService, private router: Router) { }
+  constructor(public usersService: UsersService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -33,16 +33,15 @@ export class LoginComponent implements OnInit {
           this.router.navigateByUrl('/home')
           console.log(Response.message);
         } else {
-          console.log("ERROR");
-
+          console.log(Response.message);
+          this.username = ""
+          this.password = ""
         }
       }
     })
   }
 
-  public logout(): void {
-    this.usersService.clearCurrentUser()
-  }
+
 
 
 

@@ -11,7 +11,8 @@ export class UsersService {
 
   constructor(private http: HttpClient, private sharedService: SharedService, private cookies: CookieService) { }
 
-  public getUsers(): Observable<any> {// reemplazar por la la interfaz de Users
+
+  public getUsers(): Observable<any> {// reemplazar any por la la interfaz de Users
     return this.http.get(`${this.sharedService.API_PATH}/users`);
   }
 
@@ -23,8 +24,14 @@ export class UsersService {
     return this.http.post(`${this.sharedService.API_PATH}/users`, newUser);
   }
 
+
+  //metodos del token
+
+  /*  public currentUser: string = this.getCurrentUser();*///comentado, no es necesario tener una variable si cada peticion getCurrentUser devuelve el currentUser
+
   public setCurrentUser(token: string): void {
     this.cookies.set("username", token)
+    console.log(`currentUser = ${this.getCurrentUser()}`);
   }
 
   public getCurrentUser(): string {
