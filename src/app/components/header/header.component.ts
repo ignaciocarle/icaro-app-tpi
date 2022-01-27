@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { UsersService } from 'src/app/services/users.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -9,14 +9,25 @@ import { UsersService } from 'src/app/services/users.service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(public usersService: UsersService, private router: Router) { }
+  constructor(private usersService: UsersService, private router: Router) { }
 
   ngOnInit(): void {
   }
 
+  //METODOS DE USUARIOS
   public logout(): void {
     this.usersService.clearCurrentUser();
     this.router.navigateByUrl('/login')
+  }
+
+  public getCurrentUser(): string {
+    return this.usersService.getCurrentUser()
+  }
+
+  public getUsers(): void {
+    this.usersService.getUsers().subscribe(data => {
+      console.log(data);
+    });
   }
 
 }

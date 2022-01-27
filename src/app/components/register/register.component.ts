@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from 'src/app/services/users.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -16,9 +17,12 @@ export class RegisterComponent implements OnInit {
   public country: string = "";
   public city: string = "";
 
-  constructor(public usersService: UsersService) { }
+  constructor(private usersService: UsersService, private router: Router) { }
 
   ngOnInit(): void {
+    if (this.usersService.getCurrentUser()) {
+      this.router.navigateByUrl('/inbox')
+    }
   }
 
   public registerUser(): void {
@@ -30,33 +34,19 @@ export class RegisterComponent implements OnInit {
       country: this.country,
       city: this.city
     };
-    this.usersService.registerUser(newUser).subscribe((Response: any) => {//cambiar sintaxis a next/error
-      console.log(Response.users);
-    },
-      error => {
-        console.log(error);
-      })
-  }
 
-  //TESTING
-  newUserTest: any = {
-    username: "yoda.i.am",
-    firstName: "Yoda",
-    lastName: "Master",
-    password: "wordpass",
-    country: "Dagobah",
-    city: "unknown"
-  }
+    this.usersService.registerUser(newUser).subscribe({
+      next: (response: any) => {
 
-  public testRegister(): void {
-    this.usersService.registerUser(this.newUserTest).subscribe((Response: any) => {
-      console.log();
+        console.log(response.users);
+
+        this.router.navigateByUrl('/home')
+      },
+      error: (e: any) => {
+        this.password = "";
+
+        console.log(e.error.text);
+      }
     })
-  }
-
-  public testGetUsers(): void {
-    this.usersService.getUsers().subscribe(data => {
-      console.log(data);
-    });
   }
 }

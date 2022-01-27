@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+
 import { SharedService } from './shared.service';
 import { CookieService } from 'ngx-cookie-service';
 
@@ -25,9 +26,9 @@ export class UsersService {
   }
 
 
-  //metodos del token
+  //metodos del cookies
 
-  /*  public currentUser: string = this.getCurrentUser();*///comentado, no es necesario tener una variable si cada peticion getCurrentUser devuelve el currentUser
+  /*  public currentUser: string = this.getCurrentUser();*/ //no es necesario tener una variable si cada peticion getCurrentUser devuelve el currentUser
 
   public setCurrentUser(token: string): void {
     this.cookies.set("username", token)

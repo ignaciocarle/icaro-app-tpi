@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UsersService } from 'src/app/services/users.service';
 import { Router } from '@angular/router';
 
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -12,12 +13,16 @@ export class LoginComponent implements OnInit {
 
   public username: string = "";
   public password: string = "";
+  public success: boolean = false;
+  public missingInfo: boolean = false;
 
-  allUsers: any = [];
 
-  constructor(public usersService: UsersService, private router: Router) { }
+  constructor(private usersService: UsersService, private router: Router) { }
 
   ngOnInit(): void {
+    if (this.usersService.getCurrentUser()) {
+      this.router.navigateByUrl('/inbox')
+    }
   }
 
   public login(): void {
@@ -27,28 +32,23 @@ export class LoginComponent implements OnInit {
     };
 
     this.usersService.login(user).subscribe({
-      next: (Response: any) => {
-        if (Response.loginSuccesful === true) {
+      next: (response: any) => {
+        this.success = response.loginSuccesful;
+        if (response.loginSuccesful === true) {
           this.usersService.setCurrentUser(user.username)
           this.router.navigateByUrl('/home')
-          console.log(Response.message);
         } else {
-          console.log(Response.message);
-          this.username = ""
           this.password = ""
+          alert("Incorrect User or password. Please try again.")
         }
+        console.log(response.message);
+
+      },
+      error: (e) => {
+        this.missingInfo = true
+        alert("Please enter Username and Password.")
+        console.log(`ERROR: ${e.error.text}`);
       }
     })
-  }
-
-
-
-
-
-  //TESTING
-  public testGetUsers(): void {
-    this.usersService.getUsers().subscribe(data => {
-      console.log(data);
-    });
   }
 }
