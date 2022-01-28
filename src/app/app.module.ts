@@ -22,6 +22,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CookieService } from 'ngx-cookie-service';
 import { UsersService } from './services/users.service';
 import { SharedService } from './services/shared.service';
+import { SentComponent } from './components/sent/sent.component';
+import { MessagesService } from './services/messages.service';
+import { MessagesComponent } from './components/messages/messages.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +37,8 @@ import { SharedService } from './services/shared.service';
     PageNotFoundComponent,
     RegisterComponent,
     InboxComponent,
+    SentComponent,
+    MessagesComponent,
   ],
   imports: [
     BrowserModule,
@@ -45,7 +50,8 @@ import { SharedService } from './services/shared.service';
   providers: [
     UsersService,
     SharedService,
-    CookieService
+    CookieService,
+    MessagesService
   ],
   bootstrap: [AppComponent]
 })

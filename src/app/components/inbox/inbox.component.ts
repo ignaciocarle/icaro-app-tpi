@@ -10,6 +10,7 @@ export class InboxComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+
   }
 
 }

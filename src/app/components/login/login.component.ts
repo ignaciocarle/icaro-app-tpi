@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { UsersService } from 'src/app/services/users.service';
 import { Router } from '@angular/router';
 
+import { Users } from 'src/app/interfaces/users';
+
 
 @Component({
   selector: 'app-login',
@@ -20,34 +22,38 @@ export class LoginComponent implements OnInit {
   constructor(private usersService: UsersService, private router: Router) { }
 
   ngOnInit(): void {
-    if (this.usersService.getCurrentUser()) {
-      this.router.navigateByUrl('/inbox')
+    if (!!this.usersService.getCurrentUser()) {
+      this.router.navigateByUrl('/messages')
     }
   }
 
   public login(): void {
-    const user = {
+    const loggingUser: Users = {
       username: this.username,
-      password: this.password
+      firstName: "",
+      lastName: "",
+      password: this.password,
+      country: "",
+      city: ""
     };
 
-    this.usersService.login(user).subscribe({
+    this.usersService.login(loggingUser).subscribe({
       next: (response: any) => {
         this.success = response.loginSuccesful;
         if (response.loginSuccesful === true) {
-          this.usersService.setCurrentUser(user.username)
-          this.router.navigateByUrl('/home')
+          this.usersService.setCurrentUser(loggingUser.username)
+          this.router.navigateByUrl('/messages')
         } else {
           this.password = ""
           alert("Incorrect User or password. Please try again.")
         }
-        console.log(response.message);
+        console.log(response.message);///////////////
 
       },
       error: (e) => {
         this.missingInfo = true
         alert("Please enter Username and Password.")
-        console.log(`ERROR: ${e.error.text}`);
+        console.log(`ERROR: ${e.error.text}`);/////////////////
       }
     })
   }

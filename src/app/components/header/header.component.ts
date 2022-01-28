@@ -9,20 +9,23 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private usersService: UsersService, private router: Router) { }
+  constructor(public usersService: UsersService, private router: Router) { }
 
   ngOnInit(): void {
   }
 
   //METODOS DE USUARIOS
+
   public logout(): void {
     this.usersService.clearCurrentUser();
-    this.router.navigateByUrl('/login')
+    this.router.navigateByUrl('/login');
+    console.log("Logout exitoso!");
   }
 
-  public getCurrentUser(): string {
-    return this.usersService.getCurrentUser()
-  }
+  //COMENTADO porque el HTML obtiene el dato directamente desde una propiedad del servicio UsersService
+  /*  public getCurrentUser(): string {
+      return this.usersService.getCurrentUser()
+    }*/
 
   public getUsers(): void {
     this.usersService.getUsers().subscribe(data => {

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { UsersService } from 'src/app/services/users.service';
+
 
 
 @Component({
@@ -9,9 +11,14 @@ import { UsersService } from 'src/app/services/users.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(public usersService: UsersService) { }
+  public currentUser: string = "";
+  constructor(private usersService: UsersService, private router: Router) { }
 
   ngOnInit(): void {
+    this.currentUser = this.usersService.getCurrentUser();
+    if (!!this.currentUser) {
+      this.router.navigateByUrl('/messages')
+    }
   }
 
 }

@@ -1,21 +1,4 @@
-<div class="container">
-  <div
-    class="p-4 d-flex flex-column align-items-center"
-    *ngIf="usersService.getCurrentUser()"
-  >
-    <h3>Welcome {{ usersService.getCurrentUser() }}!!!</h3>
-    <h3>Welcome {{ usersService.getCurrentUser() }}!!!</h3>
-    <h3>Welcome {{ usersService.getCurrentUser() }}!!!</h3>
-    <h3>Welcome {{ usersService.getCurrentUser() }}!!!</h3>
-    <h3>Welcome {{ usersService.getCurrentUser() }}!!!</h3>
-    <h3>Welcome {{ usersService.getCurrentUser() }}!!!</h3>
-    <h3>Welcome {{ usersService.getCurrentUser() }}!!!</h3>
-    <h3>Welcome {{ usersService.getCurrentUser() }}!!!</h3>
-  </div>
-  <div
-    class="p-4 d-flex flex-column align-items-center"
-    *ngIf="!usersService.getCurrentUser()"
-  >
-    <h3>Please <a routerLink="/login">login</a> to continue.</h3>
-  </div>
+<div class="p-4 d-flex flex-column align-items-center">
+  <h3>Please <a routerLink="/login">login</a> to continue.</h3>
+  <span>Don't have an account? <a routerLink="/register">Sign up</a></span>
 </div>
