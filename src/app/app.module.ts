@@ -48,6 +48,7 @@ import { MessagesComponent } from './components/messages/messages.component';
     NgbModule,
   ],
   providers: [
+    SharedService,
     UsersService,
     SharedService,
     CookieService,

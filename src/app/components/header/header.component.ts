@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { UsersService } from 'src/app/services/users.service';
 import { Router } from '@angular/router';
+
+import { UsersService } from 'src/app/services/users.service';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-header',
@@ -9,28 +11,22 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(public usersService: UsersService, private router: Router) { }
+  constructor(public shared: SharedService, private usersService: UsersService, private router: Router) { }
 
   ngOnInit(): void {
   }
 
   //METODOS DE USUARIOS
-
   public logout(): void {
     this.usersService.clearCurrentUser();
     this.router.navigateByUrl('/login');
     console.log("Logout exitoso!");
   }
 
-  //COMENTADO porque el HTML obtiene el dato directamente desde una propiedad del servicio UsersService
-  /*  public getCurrentUser(): string {
-      return this.usersService.getCurrentUser()
-    }*/
-
+  //////////////////////////////////
   public getUsers(): void {
     this.usersService.getUsers().subscribe(data => {
       console.log(data);
     });
   }
-
 }

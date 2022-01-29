@@ -16,9 +16,9 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentUser = this.usersService.getCurrentUser();
-    if (!!this.currentUser) {
+    /*if (!!this.currentUser) {
       this.router.navigateByUrl('/messages')
-    }
+    }*/
   }
 
 }

@@ -12,9 +12,11 @@ import { UsersService } from './users.service';
 })
 export class MessagesService {
 
+  public messagesArray: Array<Object> = []
+
   constructor(private http: HttpClient, private sharedService: SharedService, private usersService: UsersService) { }
 
-  public getInbox(): Observable<any> {
+  public getInbox(): Observable<any> {////////pasar a privado y armar el getmessages aca
     return this.http.get(`${this.sharedService.API_PATH}/users/${this.usersService.currentUser}/messages/inbox`);
   }
 

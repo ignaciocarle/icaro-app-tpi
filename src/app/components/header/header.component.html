@@ -28,7 +28,7 @@
         <button
           routerLink="/login"
           class="btn btn-primary"
-          *ngIf="!this.usersService.currentUser"
+          *ngIf="!this.shared.currentUser"
         >
           Login
         </button>
@@ -36,10 +36,10 @@
 
       <div
         class="logged d-flex flex-column flex-sm-row justify-content-end align-items-center"
-        *ngIf="this.usersService.currentUser"
+        *ngIf="this.shared.currentUser"
       >
         <span class="px-2"
-          >Welcome, <b>{{ this.usersService.currentUser }} </b></span
+          >Welcome, <b>{{ this.shared.currentUser }} </b></span
         >
         <button class="btn btn-primary" (click)="logout()">Logout</button>
       </div>

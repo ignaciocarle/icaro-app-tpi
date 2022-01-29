@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from 'src/app/services/users.service';
 import { Router } from '@angular/router';
-import { Users } from 'src/app/interfaces/users';
+import { NewUser } from 'src/app/interfaces/users';
 
 @Component({
   selector: 'app-register',
@@ -21,13 +21,13 @@ export class RegisterComponent implements OnInit {
   constructor(private usersService: UsersService, private router: Router) { }
 
   ngOnInit(): void {
-    if (!!this.usersService.getCurrentUser()) {
+    /*if (!!this.usersService.getCurrentUser()) {
       this.router.navigateByUrl('/messages')
-    }
+    }*/
   }
 
   public registerUser(): void {
-    const newUser: Users = {
+    const newUser: NewUser = {
       username: this.username,
       firstName: this.firstName,
       lastName: this.lastName,

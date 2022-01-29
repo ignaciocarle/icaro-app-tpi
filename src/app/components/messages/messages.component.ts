@@ -16,7 +16,6 @@ export class MessagesComponent implements OnInit {
 
   ngOnInit(): void {
     this.getMessages();
-    this.router.navigateByUrl('/messages/inbox')
     if (!this.usersService.getCurrentUser()) {
       this.router.navigateByUrl('/home')
     }
