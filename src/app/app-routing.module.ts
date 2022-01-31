@@ -11,12 +11,12 @@ import { SentComponent } from './components/sent/sent.component';
 const routes: Routes = [
   {
     path: "",
-    redirectTo: "login",
+    redirectTo: "home",
     pathMatch: "full",
 
   },
-  { path: "home", component: HomeComponent, pathMatch: "full" },
-  { path: "login", component: LoginComponent, pathMatch: "full" },
+  { path: "home", component: HomeComponent },
+  { path: "login", component: LoginComponent },
   { path: "register", component: RegisterComponent, pathMatch: "full" },
   {
     path: "messages", component: MessagesComponent, children: [

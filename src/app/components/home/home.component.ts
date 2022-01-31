@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { SharedService } from 'src/app/services/shared.service';
 import { UsersService } from 'src/app/services/users.service';
 
 
@@ -11,14 +11,9 @@ import { UsersService } from 'src/app/services/users.service';
 })
 export class HomeComponent implements OnInit {
 
-  public currentUser: string = "";
-  constructor(private usersService: UsersService, private router: Router) { }
+  constructor(private usersService: UsersService, public shared: SharedService) { }
 
   ngOnInit(): void {
-    this.currentUser = this.usersService.getCurrentUser();
-    /*if (!!this.currentUser) {
-      this.router.navigateByUrl('/messages')
-    }*/
   }
 
 }

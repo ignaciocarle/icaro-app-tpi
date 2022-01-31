@@ -1,13 +1,9 @@
-export interface NewUser {
-  username: string,
-  firstName: string,
-  lastName: string,
-  password: string,
-  country: string,
-  city: string
-}
-
 export interface User {
+  id?: string,
   username: string,
-  password: string,
+  firstName?: string,
+  lastName?: string,
+  password?: string,
+  country?: string,
+  city?: string
 }

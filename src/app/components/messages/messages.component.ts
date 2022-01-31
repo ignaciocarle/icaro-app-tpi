@@ -10,28 +10,12 @@ import { Router } from '@angular/router';
 })
 export class MessagesComponent implements OnInit {
 
-  public messagesArray: Array<Object> = []
 
-  constructor(private messages: MessagesService, private router: Router, private usersService: UsersService) { }
+  constructor(private router: Router, private usersService: UsersService) { }
 
   ngOnInit(): void {
-    this.getMessages();
     if (!this.usersService.getCurrentUser()) {
       this.router.navigateByUrl('/home')
     }
-  }
-
-  private getMessages(): Array<Object> {
-
-    this.messages.getInbox().subscribe({
-      next: (response: any) => {
-        this.messagesArray = response;
-        console.log(response);///////////
-      },
-      error: (e) => {
-        console.log("ERROR");///////////
-      }
-    });
-    return this.messagesArray;
   }
 }

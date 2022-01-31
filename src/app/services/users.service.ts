@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 
-import { User, NewUser } from '../interfaces/users';
+import { User } from '../interfaces/users';
 
 import { SharedService } from './shared.service';
 import { CookieService } from 'ngx-cookie-service';
@@ -13,10 +13,12 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class UsersService {
 
+  public usersList!: Array<User>
+
   constructor(private http: HttpClient, private sharedService: SharedService, private cookies: CookieService) { }
 
   //metodos de la solicitud a la API
-  public getUsers(): Observable<any> {// reemplazar any por la la interfaz de Users
+  public fetchUsers(): Observable<any> {
     return this.http.get(`${this.sharedService.API_PATH}/users`);
   }
 
@@ -24,26 +26,43 @@ export class UsersService {
     return this.http.post(`${this.sharedService.API_PATH}/login`, user);
   }
 
-  public registerUser(newUser: NewUser): Observable<any> {
+  public registerUser(newUser: User): Observable<any> {
     return this.http.post(`${this.sharedService.API_PATH}/users`, newUser);
   }
 
+  public getUsers(): void {
+    this.fetchUsers().subscribe({
+      next: (response: any) => {
+        this.usersList = response
+        console.log(this.usersList);////////////////
+      },
+      error: () => {
+        console.log("ERROR al recuperar los usuarios");
+      }
+    });
+  }
+
+  public getUserById(id: string | undefined): User {
+    let user: User = this.usersList[Number(id) - 1];
+    return user
+  }
+
   //metodos de cookies
-  public currentUser = this.getCurrentUser()
 
   public setCurrentUser(token: string): void {
-    this.cookies.set("username", token);
+    this.cookies.set("username", token, undefined, "/");
     this.sharedService.currentUser = token;
     console.log(`currentUser = ${token}`);/////////////
   }
 
   public clearCurrentUser(): void {
-    this.cookies.delete("username");
+    this.cookies.delete("username", "/");
     this.sharedService.currentUser = "";
     console.log(`currentUser cleared`);////////////
   }
 
   public getCurrentUser(): string {
-    return this.cookies.get("username")
+    this.sharedService.currentUser = this.cookies.get("username");
+    return this.sharedService.currentUser;
   }
 }

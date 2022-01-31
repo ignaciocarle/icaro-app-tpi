@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from 'src/app/services/users.service';
 import { Router } from '@angular/router';
-import { NewUser } from 'src/app/interfaces/users';
+import { User } from 'src/app/interfaces/users';
 
 @Component({
   selector: 'app-register',
@@ -27,7 +27,7 @@ export class RegisterComponent implements OnInit {
   }
 
   public registerUser(): void {
-    const newUser: NewUser = {
+    const User: User = {
       username: this.username,
       firstName: this.firstName,
       lastName: this.lastName,
@@ -36,7 +36,7 @@ export class RegisterComponent implements OnInit {
       city: this.city
     };
 
-    this.usersService.registerUser(newUser).subscribe({
+    this.usersService.registerUser(User).subscribe({
       next: (response: any) => {
 
         console.log(response.users);
