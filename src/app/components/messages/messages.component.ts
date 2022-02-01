@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { MessagesService } from 'src/app/services/messages.service';
 import { UsersService } from 'src/app/services/users.service';
 import { Router } from '@angular/router';
 
@@ -9,7 +8,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./messages.component.css']
 })
 export class MessagesComponent implements OnInit {
-
 
   constructor(private router: Router, private usersService: UsersService) { }
 

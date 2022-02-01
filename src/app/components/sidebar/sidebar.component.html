@@ -1,38 +1,31 @@
-<div class="d-flex flex-column flex-shrink-0 p-3 bg-light">
+<div class="d-flex flex-column p-3 bg-light">
   <hr />
   <ul class="nav nav-pills flex-column mb-auto">
     <li class="nav-item">
-      <a href="#" class="nav-link active" aria-current="page">
-        <svg class="bi me-2" width="16" height="16"></svg>
-        Home
+      <a
+        routerLink="/messages/inbox"
+        routerLinkActive="active"
+        class="nav-link link-dark"
+      >
+        Inbox
       </a>
     </li>
-    <li>
-      <a href="#" class="nav-link link-dark">
-        <svg class="bi me-2" width="16" height="16"></svg>
-        Dashboard
+    <li class="nav-item">
+      <a
+        routerLink="/messages/sent"
+        routerLinkActive="active"
+        class="nav-link link-dark"
+      >
+        Sent
       </a>
     </li>
-    <li>
-      <a href="#" class="nav-link link-dark">
-        <svg class="bi me-2" width="16" height="16"></svg>
-        Orders
-      </a>
-    </li>
-    <li>
-      <a href="#" class="nav-link link-dark">
-        <svg class="bi me-2" width="16" height="16">
-          <use xlink:href="#grid" />
-        </svg>
-        Products
-      </a>
-    </li>
-    <li>
-      <a href="#" class="nav-link link-dark">
-        <svg class="bi me-2" width="16" height="16">
-          <use xlink:href="#people-circle" />
-        </svg>
-        Customers
+    <li class="nav-item">
+      <a
+        class="nav-link link-dark"
+        routerLink="/messages/new"
+        routerLinkActive="active"
+      >
+        New Message
       </a>
     </li>
   </ul>

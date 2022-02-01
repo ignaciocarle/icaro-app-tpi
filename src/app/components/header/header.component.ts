@@ -15,7 +15,7 @@ export class HeaderComponent implements OnInit {
   constructor(public shared: SharedService, private usersService: UsersService, private router: Router) { }
 
   ngOnInit(): void {
-    this.usersService.getCurrentUser();
+    //this.usersService.getCurrentUser();
   }
 
   //METODOS DE USUARIOS
@@ -27,6 +27,6 @@ export class HeaderComponent implements OnInit {
 
   //////////////////////////////////
   public testGetUsers(): void {
-    this.usersService.getUsers();
+    console.log(this.usersService.getUsersList());
   }
 }
