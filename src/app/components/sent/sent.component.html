@@ -1,1 +1,18 @@
-<p>sent works!</p>
+<div class="p-4 d-flex flex-column align-items-center">
+  <h3>Sent</h3>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th scope="col">Sender</th>
+        <th scope="col">Receiver</th>
+        <th scope="col">Message</th>
+      </tr>
+    </thead>
+    <tr *ngFor="let message of this.box.data">
+      <td>{{ message.senderId }}</td>
+      <td>{{ message.receiverId }}</td>
+      <td>{{ message.text }}</td>
+    </tr>
+  </table>
+  <button class="btn btn-primary" (click)="this.refresh()">Refresh</button>
+</div>

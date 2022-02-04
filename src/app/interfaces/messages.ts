@@ -10,3 +10,8 @@ export interface NewMessage {
   receiverId: string,
   text: string
 }
+
+export interface Box {
+  identifier: string,
+  data: Message[]
+}

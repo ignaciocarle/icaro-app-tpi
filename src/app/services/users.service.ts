@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { async, Observable } from 'rxjs';
 
 import { User } from '../interfaces/users';
 
@@ -12,9 +12,11 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class UsersService {
 
-  public usersList: Array<User> = this.setUsersList();//lista de usuarios
+  private usersList!: Array<User>;
 
-  constructor(private http: HttpClient, private sharedService: SharedService, private cookies: CookieService) { /*this.setUsersList()*/ }
+  constructor(private http: HttpClient, private sharedService: SharedService, private cookies: CookieService) {
+    this.setUsersList()
+  }
 
   //metodos de la solicitud a la API
   public login(user: User): Observable<any> {
@@ -31,22 +33,20 @@ export class UsersService {
 
 
   //metodos de manejo de datos
-  public setUsersList(): Array<User> {
-    let fetchedUsersList: Array<User> = [];
-
-    this.fetchUsers().subscribe({
+  private setUsersList(): void {
+    const observer = {
       next: (response: any) => {
-        fetchedUsersList = response
-        this.usersList = response
-        console.log("Lista de usuarios desde setUsersList()");/////
-        console.log(response);///////////////////////////
+        this.usersList = response;
+        console.log("Lista de usuarios desde setUsersList()"); /////
+        console.log(this.usersList); /////////////////////////////////////
       },
-      error: (e) => {
+      error: (e: any) => {
         console.log("ERROR al recuperar los usuarios");
         console.log(e);
       }
-    });
-    return fetchedUsersList;
+    }
+
+    this.fetchUsers().subscribe(observer);
   }
 
   //metodos publicos de acceso a los datos

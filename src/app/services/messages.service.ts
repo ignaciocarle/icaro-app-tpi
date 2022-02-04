@@ -12,27 +12,21 @@ import { UsersService } from './users.service';
 })
 export class MessagesService {
 
-  private inbox: Array<Message> = this.setInbox();
-
   constructor(private http: HttpClient, private sharedService: SharedService, private usersService: UsersService) { }
 
-
   //metodos de solicitud a la API
-  private fetchInbox(): Observable<any> {////////pasar a privado y armar el getmessages aca
-    return this.http.get(`${this.sharedService.API_PATH}/users/${this.usersService.getCurrentUser()}/messages/inbox`);
+  private fetchMessages(mailbox: string): Observable<any> {
+    return this.http.get(`${this.sharedService.API_PATH}/users/${this.usersService.getCurrentUser()}/messages/${mailbox}`);
   }
 
-  private fetchSent(): Observable<any> {
-    return this.http.get(`${this.sharedService.API_PATH}/users/${this.usersService.getCurrentUser()}/messages/sent`);
-  }
-
-  private sendMessage(message: Message): Observable<any> {
+  private attemptSendMessage(message: Message): Observable<any> {
     return this.http.post(`${this.sharedService.API_PATH}/users/${this.usersService.getCurrentUser()}/messages`, message);
   }
 
   //metodos de manejo de datos
-  private transformMessages(msg: Message) {
-    const transformedMsg: Message = {
+
+  private transformMsg = (msg: Message): Message => {
+    const transformedMsg = {
       id: msg.id,
       senderId: this.usersService.getUserById(msg.senderId).username,
       receiverId: this.usersService.getUserById(msg.receiverId).username,
@@ -41,28 +35,25 @@ export class MessagesService {
     return transformedMsg
   }
 
-  private setInbox(): Array<Message> {
-    const fetchedMessages: Array<Message> = [];
+  public getMailbox(mailbox: string): Array<Message> {
+    const fetched: Array<Message> = []
 
-    this.fetchInbox().subscribe({
+    const observer = {
       next: (response: any) => {
         response.forEach((element: Message) => {
-          fetchedMessages.push(this.transformMessages(element))
+          fetched.push(this.transformMsg(element))
         });
-        this.inbox = fetchedMessages;
-        console.log("Lista de mensajes desde setInbox");/////
-        console.log(response);/////////////////////////////////////////
+        console.log("Lista de mensajes desde getInbox()");/////
+        console.log(fetched);/////////////////////////////////////////
       },
-      error: (e) => {
+      error: (e: any) => {
         console.log("ERROR al recuperar los mensajes");
         console.log(e);
       }
-    });
-    return fetchedMessages;
-  }
+    }
 
-  //metodos publicos de acceso a los datos
-  public getInbox(): Array<Message> {
-    return this.inbox
+    this.fetchMessages(mailbox).subscribe(observer);
+
+    return fetched;
   }
 }

@@ -8,12 +8,11 @@
         <th scope="col">Message</th>
       </tr>
     </thead>
-    <tr *ngFor="let message of inbox">
+    <tr *ngFor="let message of this.box.data">
       <td>{{ message.senderId }}</td>
       <td>{{ message.receiverId }}</td>
       <td>{{ message.text }}</td>
     </tr>
   </table>
-
-  <!--<button class="btn btn-primary" (click)="test()">TEST</button>-->
+  <button class="btn btn-primary" (click)="this.refresh()">Refresh</button>
 </div>
