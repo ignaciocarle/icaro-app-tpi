@@ -11,7 +11,7 @@ export interface NewMessage {
   text: string
 }
 
-export interface Box {
+export interface Mailbox {
   identifier: string,
-  data: Message[]
+  data?: Message[]
 }

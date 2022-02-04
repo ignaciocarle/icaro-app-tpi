@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MessagesService } from 'src/app/services/messages.service';
 
-import { Box, Message } from 'src/app/interfaces/messages';
+import { Mailbox } from 'src/app/interfaces/messages';
 
 @Component({
   selector: 'app-inbox',
@@ -10,19 +10,18 @@ import { Box, Message } from 'src/app/interfaces/messages';
 })
 export class InboxComponent implements OnInit {
 
-  public box: Box = {
-    identifier: "inbox",
-    data: []
+  public box: Mailbox = {
+    identifier: "inbox"
   }
 
   constructor(private messagesService: MessagesService) {
-    this.box.data = this.messagesService.getMailbox(this.box.identifier)
+    this.refresh();
   }
 
   ngOnInit(): void {
   }
 
   public refresh(): void {
-    this.box.data = this.messagesService.getMailbox(this.box.identifier)
+    this.box.data = this.messagesService.getMailbox(this.box.identifier);
   }
 }

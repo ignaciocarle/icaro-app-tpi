@@ -12,10 +12,10 @@ import { CookieService } from 'ngx-cookie-service';
 })
 export class UsersService {
 
-  private usersList!: Array<User>;
+  private usersList!: User[];
 
   constructor(private http: HttpClient, private sharedService: SharedService, private cookies: CookieService) {
-    this.setUsersList()
+    this.usersList = this.getUsersList()
   }
 
   //metodos de la solicitud a la API
@@ -33,12 +33,16 @@ export class UsersService {
 
 
   //metodos de manejo de datos
-  private setUsersList(): void {
+  public getUsersList(): User[] {
+    const fetched: User[] = []
     const observer = {
       next: (response: any) => {
-        this.usersList = response;
-        console.log("Lista de usuarios desde setUsersList()"); /////
-        console.log(this.usersList); /////////////////////////////////////
+        response.forEach((element: User) => {
+          fetched.push(element)
+        });
+        //fetched = response;
+        console.log("Lista de %cusuarios%c desde getUsersList()", "color:red;", ""); /////
+        console.log(fetched); /////////////////////////////////////
       },
       error: (e: any) => {
         console.log("ERROR al recuperar los usuarios");
@@ -47,30 +51,24 @@ export class UsersService {
     }
 
     this.fetchUsers().subscribe(observer);
+    return fetched;
   }
 
-  //metodos publicos de acceso a los datos
-  public getUsersList(): Array<User> {
-    this.setUsersList();
-    return this.usersList;
-  }
-
-  public getUserById(id: string): User {
-    let user: User = this.usersList[Number(id) - 1];
-    return user
+  public getUserById(id: string): string {//////////////////////////////////////////////////hacer un find aca
+    return this.usersList[Number(id) - 1].username
   }
 
   //metodos de cookies
   public setCurrentUser(token: string): void {
     this.cookies.set("username", token, undefined, "/");
     this.sharedService.currentUser = token;
-    console.log(`currentUser = ${token}`);/////////////////////
+    //console.log(`currentUser = ${token}`);/////////////////////
   }
 
   public clearCurrentUser(): void {
     this.cookies.delete("username", "/");
     this.sharedService.currentUser = "";
-    console.log(`currentUser cleared`);////////////
+    //console.log(`currentUser cleared`);////////////
   }
 
   public getCurrentUser(): string {

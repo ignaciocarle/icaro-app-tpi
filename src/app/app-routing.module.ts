@@ -5,8 +5,9 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { MessagesComponent } from './components/messages/messages.component';
-import { InboxComponent } from './components/inbox/inbox.component';
-import { SentComponent } from './components/sent/sent.component';
+import { InboxComponent } from './components/messages/inbox/inbox.component';
+import { SentComponent } from './components/messages/sent/sent.component';
+import { NewComponent } from './components/messages/new/new.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,9 @@ const routes: Routes = [
       }, {
         path: "sent",
         component: SentComponent, pathMatch: "full"
+      }, {
+        path: "new",
+        component: NewComponent, pathMatch: "full"
       }]
   },
   {

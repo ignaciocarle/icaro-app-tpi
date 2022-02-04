@@ -26,7 +26,7 @@ export class HeaderComponent implements OnInit {
   }
 
   //////////////////////////////////
-  public testGetUsers(): void {
-    console.log(this.usersService.getUsersList());
-  }
+  //public testGetUsers(): void {
+  //  console.log(this.usersService.getUsersList());
+  //}
 }

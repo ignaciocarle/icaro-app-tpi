@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MessagesService } from 'src/app/services/messages.service';
-import { Box, Message } from 'src/app/interfaces/messages';
+import { Mailbox } from 'src/app/interfaces/messages';
 
 @Component({
   selector: 'app-sent',
@@ -9,7 +9,7 @@ import { Box, Message } from 'src/app/interfaces/messages';
 })
 export class SentComponent implements OnInit {
 
-  public box: Box = {
+  public box: Mailbox = {
     identifier: "sent",
     data: []
   }

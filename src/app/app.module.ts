@@ -8,7 +8,10 @@ import { HomeComponent } from './components/home/home.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { RegisterComponent } from './components/register/register.component';
-import { InboxComponent } from './components/inbox/inbox.component';
+import { MessagesComponent } from './components/messages/messages.component';
+import { InboxComponent } from './components/messages/inbox/inbox.component';
+import { SentComponent } from './components/messages/sent/sent.component';
+import { NewComponent } from './components/messages/new/new.component';
 
 //MODULOS
 import { NgModule } from '@angular/core';
@@ -22,9 +25,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CookieService } from 'ngx-cookie-service';
 import { UsersService } from './services/users.service';
 import { SharedService } from './services/shared.service';
-import { SentComponent } from './components/sent/sent.component';
 import { MessagesService } from './services/messages.service';
-import { MessagesComponent } from './components/messages/messages.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { MessagesComponent } from './components/messages/messages.component';
     InboxComponent,
     SentComponent,
     MessagesComponent,
+    NewComponent,
   ],
   imports: [
     BrowserModule,
