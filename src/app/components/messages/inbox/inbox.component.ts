@@ -10,7 +10,8 @@ import { Mailbox } from 'src/app/interfaces/messages';
 export class InboxComponent implements OnInit {
 
   public box: Mailbox = {
-    identifier: "inbox"
+    identifier: "inbox",
+    data: []
   }
 
   constructor(private messagesService: MessagesService) {

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { Message, NewMessage } from '../interfaces/messages';
+import { Mailbox, Message, NewMessage } from '../interfaces/messages';
 
 import { SharedService } from './shared.service';
 import { UsersService } from './users.service';
@@ -11,6 +11,8 @@ import { UsersService } from './users.service';
   providedIn: 'root'
 })
 export class MessagesService {
+
+  private mailboxes!: Mailbox[]
 
   constructor(private http: HttpClient,
     private sharedService: SharedService,
@@ -31,7 +33,7 @@ export class MessagesService {
 
   //metodos de manejo de datos
 
-  private transformMessage = (msg: Message): Message => {
+  private transformMessage(msg: Message): Message {
     const transformedMessage: Message = {
       id: msg.id,
       senderId: this.usersService.getUserById(msg.senderId),
@@ -41,26 +43,41 @@ export class MessagesService {
     return transformedMessage
   }
 
-  //metodos publicos
+  private getBoxId(identifier: string) {
+    return this.mailboxes.findIndex((x) => x.identifier === identifier)
+  }
 
-  public getMailbox(mailbox: string): Message[] {
-    const fetched: Message[] = []
+  private setMailbox(identifier: string): void {
+    let fetched: Mailbox[] = [{
+      identifier: "inbox",
+      data: []
+    }, {
+      identifier: "sent",
+      data: []
+    }]
     const observer = {
       next: (response: any) => {
         response.forEach((element: Message) => {
-          fetched.push(this.transformMessage(element))
+          fetched[this.getBoxId(identifier)].data.push(this.transformMessage(element))
         });
-        //console.log(`Lista de mensajes %c"${mailbox}"%c desde getMailbox`, "color:red;", "");/////
-        //console.log(fetched);/////////////////////////////////////////
+        //console.log(`Lista de mensajes %c"${identifier}"%c desde setMailbox`, "color:red;", "");/////
+        //console.log(fetched[this.getBoxId(identifier)].data);/////////////////////////////////////////
       },
       error: (e: any) => {
-        console.log("ERROR al recuperar los mensajes");
+        console.log(`ERROR al recuperar los mensajes de ${identifier}`);
         console.log(e);
       }
     }
 
-    this.fetchMessages(mailbox).subscribe(observer);
-    return fetched;
+    this.fetchMessages(identifier).subscribe(observer);
+    this.mailboxes = fetched
+  }
+
+  //metodos publicos
+
+  public getMailbox(identifier: string): Message[] {
+    this.setMailbox(identifier)
+    return this.mailboxes[this.getBoxId(identifier)].data;
   }
 
   public sendMessage(newMsg: NewMessage): void {

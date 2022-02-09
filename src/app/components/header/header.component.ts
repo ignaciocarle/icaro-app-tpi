@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
-    //this.usersService.getCurrentUser();
+    this.usersService.getCurrentUser();
   }
 
   //METODOS DE USUARIOS

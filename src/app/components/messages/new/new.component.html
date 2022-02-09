@@ -27,4 +27,10 @@
       Send Message
     </button>
   </form>
+
+  <div>
+    <ul>
+      <li *ngFor="let item of this.usersList">{{ item.username }}</li>
+    </ul>
+  </div>
 </div>

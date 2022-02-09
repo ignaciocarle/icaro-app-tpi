@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { async, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { User } from '../interfaces/users';
 
@@ -35,7 +35,7 @@ export class UsersService {
 
 
   //metodos de manejo de datos
-  public getUsersList(): User[] {
+  private setUsersList(): void {
     const fetched: User[] = []
     const observer = {
       next: (response: any) => {
@@ -52,11 +52,18 @@ export class UsersService {
     }
 
     this.fetchUsers().subscribe(observer);
-    return fetched;
+    this.usersList = fetched
   }
 
-  public getUserById(id: string): string {//////////////////////////////////////////////////hacer un find aca
-    return this.usersList[Number(id) - 1].username
+
+  //metodos publicos
+  public getUsersList(): User[] {
+    this.setUsersList()
+    return this.usersList;
+  }
+
+  public getUserById(id: string | undefined): string | undefined {//////////////////////////////////////////////////hacer un find o algo aca
+    return this.usersList.find((x) => x.id === id)?.username
   }
 
   //metodos de cookies

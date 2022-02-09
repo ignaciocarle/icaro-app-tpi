@@ -1,9 +1,9 @@
 export interface Message {
   id: string,
   notDeletable?: boolean,
-  receiverId: string,
-  senderId: string,
-  text: string
+  receiverId?: string,
+  senderId?: string,
+  text?: string
 }
 
 export interface NewMessage {
@@ -13,5 +13,5 @@ export interface NewMessage {
 
 export interface Mailbox {
   identifier: string,
-  data?: Message[]
+  data: Message[]
 }

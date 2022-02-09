@@ -10,7 +10,8 @@ import { Mailbox } from 'src/app/interfaces/messages';
 export class SentComponent implements OnInit {
 
   public box: Mailbox = {
-    identifier: "sent"
+    identifier: "sent",
+    data: []
   }
 
   constructor(private messagesService: MessagesService) {
