@@ -12,7 +12,9 @@ import { User } from 'src/app/interfaces/users';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(public shared: SharedService, private usersService: UsersService, private router: Router) { }
+  constructor(public shared: SharedService,
+    private usersService: UsersService,
+    private router: Router) { }
 
   ngOnInit(): void {
     //this.usersService.getCurrentUser();

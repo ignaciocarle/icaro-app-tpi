@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { MessagesService } from 'src/app/services/messages.service';
-
 import { Mailbox } from 'src/app/interfaces/messages';
 
 @Component({

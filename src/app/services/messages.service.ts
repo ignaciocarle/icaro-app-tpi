@@ -12,7 +12,9 @@ import { UsersService } from './users.service';
 })
 export class MessagesService {
 
-  constructor(private http: HttpClient, private sharedService: SharedService, private usersService: UsersService) { }
+  constructor(private http: HttpClient,
+    private sharedService: SharedService,
+    private usersService: UsersService) { }
 
   //metodos de solicitud a la API
   private fetchMessages(mailbox: string): Observable<any> {
@@ -59,6 +61,13 @@ export class MessagesService {
 
     this.fetchMessages(mailbox).subscribe(observer);
     return fetched;
+  }
+
+  public sendMessage(newMsg: NewMessage): void {
+    this.attemptSendMessage(newMsg).subscribe((response) => {
+      console.log("Mensaje enviado");
+      console.log(response);
+    })
   }
 
   public deleteMessage(messageId: string): void {

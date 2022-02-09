@@ -14,7 +14,9 @@ export class UsersService {
 
   private usersList!: User[];
 
-  constructor(private http: HttpClient, private sharedService: SharedService, private cookies: CookieService) {
+  constructor(private http: HttpClient,
+    private sharedService: SharedService,
+    private cookies: CookieService) {
     this.usersList = this.getUsersList()
   }
 
@@ -40,9 +42,8 @@ export class UsersService {
         response.forEach((element: User) => {
           fetched.push(element)
         });
-        //fetched = response;
-        console.log("Lista de %cusuarios%c desde getUsersList()", "color:red;", ""); /////
-        console.log(fetched); /////////////////////////////////////
+        //console.log("Lista de %cusuarios%c desde getUsersList()", "color:red;", ""); /////
+        //console.log(fetched); /////////////////////////////////////
       },
       error: (e: any) => {
         console.log("ERROR al recuperar los usuarios");

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from 'src/app/services/users.service';
 import { Router } from '@angular/router';
+
 import { User } from 'src/app/interfaces/users';
 
 @Component({
@@ -18,15 +19,17 @@ export class RegisterComponent implements OnInit {
   public country: string = "";
   public city: string = "";
 
-  constructor(private usersService: UsersService, private router: Router) { }
-
-  ngOnInit(): void {
-    /*if (!!this.usersService.getCurrentUser()) {
+  constructor(private usersService: UsersService,
+    private router: Router) {
+    if (!!this.usersService.getCurrentUser()) {
       this.router.navigateByUrl('/messages')
-    }*/
+    }
   }
 
-  public registerUser(): void {
+  ngOnInit(): void {
+  }
+
+  public registerUser(): void {//llevar toda esta logica al servicio de usuarios
     const User: User = {
       username: this.username,
       firstName: this.firstName,

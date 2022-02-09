@@ -1,15 +1,30 @@
 <div class="p-4 d-flex flex-column align-items-center">
   <h3>New Message</h3>
-  <form class="new-message-form container-fluid mb-3 d-flex flex-column">
-    <div class="container-fluid">
-      <div class="row">
-        <select class="form-select">
-          <option value="1">One</option>
-          <option value="2">Two</option>
-          <option value="3">Three</option>
-        </select>
-      </div>
+  <form
+    [formGroup]="newMsgForm"
+    class="new-message-form container-fluid mb-3 d-flex flex-column"
+  >
+    <div class="mb-2">
+      <label for="receiver"><h5>Receiver</h5> </label>
+      <select class="form-select" id="receiver" formControlName="receiverId">
+        <option selected hidden value="">Select a receiver</option>
+        <option *ngFor="let item of this.usersList" [value]="item.id">
+          {{ item.username }}
+        </option>
+      </select>
     </div>
-    <button type="submit" class="btn btn-primary">Send Message</button>
+
+    <div class="mb-2">
+      <label for="message"><h5>Message</h5> </label>
+      <textarea
+        class="form-control"
+        id="message"
+        formControlName="text"
+        rows="8"
+      ></textarea>
+    </div>
+    <button class="btn btn-primary" (click)="submitNewMessage()">
+      Send Message
+    </button>
   </form>
 </div>

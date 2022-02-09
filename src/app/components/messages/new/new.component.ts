@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+
 import { User } from 'src/app/interfaces/users';
+import { NewMessage } from 'src/app/interfaces/messages';
+
 import { UsersService } from 'src/app/services/users.service';
+import { MessagesService } from 'src/app/services/messages.service';
 
 @Component({
   selector: 'app-new',
@@ -9,24 +14,34 @@ import { UsersService } from 'src/app/services/users.service';
 })
 export class NewComponent implements OnInit {
 
-  public usersList?: User[]
+  public usersList!: User[];
+  public newMsgForm: FormGroup = this.fb.group({
+    receiverId: "",
+    text: ""
+  }, { validators: [Validators.minLength(2), Validators.required] });
 
-  constructor(private usersService: UsersService) {
+  constructor(private fb: FormBuilder,
+    private usersService: UsersService,
+    private messagesService: MessagesService) {
     this.getUsers();
   }
 
   ngOnInit(): void {
   }
 
-  private getUsers(): void {
-    const usernameList: User[] = []
 
-    this.usersService.getUsersList().forEach((element: User) => {
-      const usernameOnly: User = {
-        username: element.username
-      }
-      usernameList.push(usernameOnly)
-    })
-    this.usersList = usernameList
+  private getUsers(): void {
+    this.usersList = this.usersService.getUsersList()
   }
+
+  public submitNewMessage(): void {
+    const message: NewMessage = {
+      receiverId: this.newMsgForm.controls["receiverId"].value,
+      text: this.newMsgForm.controls["text"].value
+    }
+
+    this.messagesService.sendMessage(message)
+  }
+
+
 }

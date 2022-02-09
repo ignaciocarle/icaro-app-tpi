@@ -11,7 +11,7 @@ import { UsersService } from 'src/app/services/users.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private usersService: UsersService, public shared: SharedService) { }
+  constructor(public shared: SharedService) { }
 
   ngOnInit(): void {
   }

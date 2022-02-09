@@ -10,17 +10,17 @@ import { Mailbox } from 'src/app/interfaces/messages';
 export class SentComponent implements OnInit {
 
   public box: Mailbox = {
-    identifier: "sent",
-    data: []
+    identifier: "sent"
   }
 
   constructor(private messagesService: MessagesService) {
-    this.box.data = this.messagesService.getMailbox(this.box.identifier)
+    this.refresh();
   }
 
   ngOnInit(): void {
   }
+
   public refresh(): void {
-    this.box.data = this.messagesService.getMailbox(this.box.identifier)
+    this.box.data = this.messagesService.getMailbox(this.box.identifier);
   }
 }

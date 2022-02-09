@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 
 import { User } from 'src/app/interfaces/users';
 
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -12,22 +11,25 @@ import { User } from 'src/app/interfaces/users';
 })
 
 export class LoginComponent implements OnInit {
-
+  //llevar todo esto y el register a reactive forms
   public username: string = "";
   public password: string = "";
   public success: boolean = false;
   public missingInfo: boolean = false;
 
 
-  constructor(private usersService: UsersService, private router: Router) { }
 
-  ngOnInit(): void {
-    /*   if (!!this.usersService.getCurrentUser()) {
-         this.router.navigateByUrl('/messages')
-       }*/
+  constructor(private usersService: UsersService,
+    private router: Router) {
+    if (!!this.usersService.getCurrentUser()) {
+      this.router.navigateByUrl('/messages/inbox')
+    }
   }
 
-  public login(): void {
+  ngOnInit(): void {
+  }
+
+  public login(): void {//llevar toda esta logica al servicio de usuarios
     const loggingUser: User = {
       username: this.username,
       password: this.password,
