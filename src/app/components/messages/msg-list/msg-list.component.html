@@ -1,1 +1,30 @@
-<p>msg-list works!</p>
+<div class="p-4 d-flex flex-column align-items-center">
+  <h3>{{ this.capitalize(identifier) }}</h3>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th class="col-1" scope="col">Sender</th>
+        <th class="col-1" scope="col">Receiver</th>
+        <th class="col" scope="col">Message</th>
+        <th class="col-1" scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="let message of this.messagesService.getMailbox(this.identifier)"
+      >
+        <td>{{ message.senderId }}</td>
+        <td>{{ message.receiverId }}</td>
+        <td>{{ message.text }}</td>
+        <td>
+          <button
+            type="button"
+            class="btn-close"
+            (click)="this.deleteMessage(message.id)"
+          ></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <button class="btn btn-primary" (click)="this.refresh()">Refresh</button>
+</div>

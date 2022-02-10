@@ -4,7 +4,7 @@ import { MailboxCollection, Message } from 'src/app/interfaces/messages';
 
 @Component({
   selector: 'app-inbox',
-  templateUrl: './inbox.component.html',
+  template: '<app-msg-list [identifier]="identifier"> </app-msg-list>',
   styleUrls: ['./inbox.component.css']
 })
 export class InboxComponent implements OnInit {
