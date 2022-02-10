@@ -23,6 +23,7 @@ export class NewComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private usersService: UsersService,
     private messagesService: MessagesService) {
+
     this.getUsers();
   }
 
@@ -41,6 +42,9 @@ export class NewComponent implements OnInit {
     }
 
     this.messagesService.sendMessage(message)
+    this.newMsgForm.controls["receiverId"].setValue("")
+    this.newMsgForm.controls["text"].setValue("")
+
   }
 
 

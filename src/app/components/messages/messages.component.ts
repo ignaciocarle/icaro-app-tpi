@@ -11,6 +11,7 @@ export class MessagesComponent implements OnInit {
 
   constructor(private router: Router,
     private usersService: UsersService) {
+
     if (!this.usersService.getCurrentUser()) {
       this.router.navigateByUrl('/home')
     }

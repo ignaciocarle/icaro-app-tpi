@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { Mailbox, Message, NewMessage } from '../interfaces/messages';
+import { MailboxCollection, Message, NewMessage } from '../interfaces/messages';
 
 import { SharedService } from './shared.service';
 import { UsersService } from './users.service';
@@ -12,14 +12,22 @@ import { UsersService } from './users.service';
 })
 export class MessagesService {
 
-  private mailboxes!: Mailbox[]
+  private mailboxes: MailboxCollection = {
+    inbox: {
+      identifier: "inbox",
+      data: []
+    }, sent: {
+      identifier: "sent",
+      data: []
+    }
+  }
 
   constructor(private http: HttpClient,
     private sharedService: SharedService,
     private usersService: UsersService) { }
 
   //metodos de solicitud a la API
-  private fetchMessages(mailbox: string): Observable<any> {
+  private fetchMessages(mailbox: keyof Message): Observable<any> {
     return this.http.get(`${this.sharedService.API_PATH}/users/${this.usersService.getCurrentUser()}/messages/${mailbox}`);
   }
 
@@ -27,41 +35,33 @@ export class MessagesService {
     return this.http.post(`${this.sharedService.API_PATH}/users/${this.usersService.getCurrentUser()}/messages`, message);
   }
 
-  private attemptDeleteMessage(messageId: string): Observable<any> {
-    return this.http.delete(`${this.sharedService.API_PATH}/users/${this.usersService.getCurrentUser()}/messages/${messageId}`)
+  private attemptDeleteMessage(messageId: keyof Message): Observable<any> {
+    return this.http.delete(`${this.sharedService.API_PATH}/messages/${messageId}`)
   }
 
   //metodos de manejo de datos
 
-  private transformMessage(msg: Message): Message {
-    const transformedMessage: Message = {
-      id: msg.id,
-      senderId: this.usersService.getUserById(msg.senderId),
-      receiverId: this.usersService.getUserById(msg.receiverId),
-      text: msg.text
-    }
-    return transformedMessage
+  private transformMessages(msgArray: Message[]): Message[] {
+    const transformedMsgArray: Message[] = []
+
+    msgArray.forEach((msg: Message) => {
+      const transformedMessage: Message = {
+        id: msg.id,
+        senderId: this.usersService.getUserById(msg.senderId),
+        receiverId: this.usersService.getUserById(msg.receiverId),
+        text: msg.text
+      }
+      transformedMsgArray.push(transformedMessage)
+    });
+    return transformedMsgArray
   }
 
-  private getBoxId(identifier: string) {
-    return this.mailboxes.findIndex((x) => x.identifier === identifier)
-  }
-
-  private setMailbox(identifier: string): void {
-    let fetched: Mailbox[] = [{
-      identifier: "inbox",
-      data: []
-    }, {
-      identifier: "sent",
-      data: []
-    }]
+  private setMailbox(identifier: keyof MailboxCollection): void {
     const observer = {
       next: (response: any) => {
-        response.forEach((element: Message) => {
-          fetched[this.getBoxId(identifier)].data.push(this.transformMessage(element))
-        });
-        //console.log(`Lista de mensajes %c"${identifier}"%c desde setMailbox`, "color:red;", "");/////
-        //console.log(fetched[this.getBoxId(identifier)].data);/////////////////////////////////////////
+        this.mailboxes[identifier].data = this.transformMessages(response);
+        console.log(`Lista de mensajes %c"${identifier}"%c desde setMailbox`, "color:red;", "");/////
+        console.log(this.mailboxes[identifier].data);/////////////////////////////////////////
       },
       error: (e: any) => {
         console.log(`ERROR al recuperar los mensajes de ${identifier}`);
@@ -69,25 +69,43 @@ export class MessagesService {
       }
     }
 
-    this.fetchMessages(identifier).subscribe(observer);
-    this.mailboxes = fetched
+    this.fetchMessages(identifier as keyof Message).subscribe(observer);
   }
 
   //metodos publicos
 
-  public getMailbox(identifier: string): Message[] {
+  public refresh(identifier: keyof MailboxCollection): void {
     this.setMailbox(identifier)
-    return this.mailboxes[this.getBoxId(identifier)].data;
   }
 
-  public sendMessage(newMsg: NewMessage): void {
-    this.attemptSendMessage(newMsg).subscribe((response) => {
-      console.log("Mensaje enviado");
-      console.log(response);
-    })
+  public getMailbox(identifier: keyof MailboxCollection): Message[] {
+    return this.mailboxes[identifier].data;
   }
 
-  public deleteMessage(messageId: string): void {
-    this.attemptDeleteMessage(messageId)
+  public sendMessage(newMsg: NewMessage): void {/////////////////////////////////// pasar a sintaxis de observador
+    const observer = {
+      next: (r: any) => {
+        console.log("mensaje enviado con éxito");
+      },
+      error: (e: any) => {
+        console.log(e.error.text);
+      }
+    }
+
+    this.attemptSendMessage(newMsg).subscribe(observer)
+  }
+
+  public deleteMessage(messageId: keyof Message, boxId: keyof MailboxCollection): void {
+    const observer = {
+      next: (r: any) => {
+        this.setMailbox(boxId)
+        alert("Message deleted")
+      },
+      error: (e: any) => {
+        console.log(e.error.text);
+      }
+    }
+
+    this.attemptDeleteMessage(messageId).subscribe(observer)
   }
 }

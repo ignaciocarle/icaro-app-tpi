@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MessagesService } from 'src/app/services/messages.service';
-import { Mailbox } from 'src/app/interfaces/messages';
+import { MailboxCollection, Message } from 'src/app/interfaces/messages';
 
 @Component({
   selector: 'app-sent',
@@ -9,12 +9,11 @@ import { Mailbox } from 'src/app/interfaces/messages';
 })
 export class SentComponent implements OnInit {
 
-  public box: Mailbox = {
-    identifier: "sent",
-    data: []
-  }
+  public identifier: keyof MailboxCollection = "sent";
 
-  constructor(private messagesService: MessagesService) {
+
+  constructor(public messagesService: MessagesService) {
+
     this.refresh();
   }
 
@@ -22,6 +21,10 @@ export class SentComponent implements OnInit {
   }
 
   public refresh(): void {
-    this.box.data = this.messagesService.getMailbox(this.box.identifier);
+    this.messagesService.refresh(this.identifier);
+  }
+
+  public deleteMessage(id: string): void {
+    this.messagesService.deleteMessage(id as keyof Message, this.identifier)
   }
 }

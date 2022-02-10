@@ -21,6 +21,7 @@ export class LoginComponent implements OnInit {
 
   constructor(private usersService: UsersService,
     private router: Router) {
+
     if (!!this.usersService.getCurrentUser()) {
       this.router.navigateByUrl('/messages/inbox')
     }

@@ -23,14 +23,11 @@
         rows="8"
       ></textarea>
     </div>
-    <button class="btn btn-primary" (click)="submitNewMessage()">
+    <button
+      class="btn btn-primary align-self-center"
+      (click)="submitNewMessage()"
+    >
       Send Message
     </button>
   </form>
-
-  <div>
-    <ul>
-      <li *ngFor="let item of this.usersList">{{ item.username }}</li>
-    </ul>
-  </div>
 </div>

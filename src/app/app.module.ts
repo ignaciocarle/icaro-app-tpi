@@ -26,6 +26,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { UsersService } from './services/users.service';
 import { SharedService } from './services/shared.service';
 import { MessagesService } from './services/messages.service';
+import { MsgListComponent } from './components/messages/msg-list/msg-list.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { MessagesService } from './services/messages.service';
     SentComponent,
     MessagesComponent,
     NewComponent,
+    MsgListComponent,
   ],
   imports: [
     BrowserModule,

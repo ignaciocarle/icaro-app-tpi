@@ -15,3 +15,8 @@ export interface Mailbox {
   identifier: string,
   data: Message[]
 }
+
+export interface MailboxCollection {
+  inbox: Mailbox,
+  sent: Mailbox
+}

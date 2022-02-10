@@ -39,7 +39,7 @@ export class UsersService {
     const fetched: User[] = []
     const observer = {
       next: (response: any) => {
-        response.forEach((element: User) => {
+        response.forEach((element: User) => {//////////////////////////////////cambiar este forEach por una asignacion
           fetched.push(element)
         });
         //console.log("Lista de %cusuarios%c desde getUsersList()", "color:red;", ""); /////
@@ -62,7 +62,7 @@ export class UsersService {
     return this.usersList;
   }
 
-  public getUserById(id: string | undefined): string | undefined {//////////////////////////////////////////////////hacer un find o algo aca
+  public getUserById(id: string | undefined): string | undefined {/////////////hacer un find o algo aca
     return this.usersList.find((x) => x.id === id)?.username
   }
 

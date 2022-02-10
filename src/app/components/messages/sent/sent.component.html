@@ -6,12 +6,20 @@
         <th scope="col">Sender</th>
         <th scope="col">Receiver</th>
         <th scope="col">Message</th>
+        <th scope="col">Actions</th>
       </tr>
     </thead>
-    <tr *ngFor="let message of this.box.data">
+    <tr
+      *ngFor="let message of this.messagesService.getMailbox(this.identifier)"
+    >
       <td>{{ message.senderId }}</td>
       <td>{{ message.receiverId }}</td>
       <td>{{ message.text }}</td>
+      <button
+        type="button"
+        class="btn-close"
+        (click)="this.deleteMessage(message.id)"
+      ></button>
     </tr>
   </table>
   <button class="btn btn-primary" (click)="this.refresh()">Refresh</button>

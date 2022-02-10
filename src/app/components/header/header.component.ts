@@ -14,10 +14,12 @@ export class HeaderComponent implements OnInit {
 
   constructor(public shared: SharedService,
     private usersService: UsersService,
-    private router: Router) { }
+    private router: Router) {
+
+    this.usersService.getCurrentUser();
+  }
 
   ngOnInit(): void {
-    this.usersService.getCurrentUser();
   }
 
   //METODOS DE USUARIOS
