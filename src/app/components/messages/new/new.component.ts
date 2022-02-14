@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { User } from 'src/app/interfaces/users';
-import { NewMessage } from 'src/app/interfaces/messages';
-
 import { UsersService } from 'src/app/services/users.service';
 import { MessagesService } from 'src/app/services/messages.service';
+
+import { User } from 'src/app/interfaces/users';
+import { NewMessage } from 'src/app/interfaces/messages';
 
 @Component({
   selector: 'app-new',

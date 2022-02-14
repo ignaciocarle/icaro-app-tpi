@@ -7,5 +7,5 @@ import { UsersService } from './services/users.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'icaro-app';
+  title = 'icaroMail';
 }

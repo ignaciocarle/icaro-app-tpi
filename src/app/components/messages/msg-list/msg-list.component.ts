@@ -11,8 +11,7 @@ export class MsgListComponent implements OnInit, OnChanges {
 
   @Input() identifier!: keyof MailboxCollection
 
-  constructor(public messagesService: MessagesService) {
-  }
+  constructor(public messagesService: MessagesService) { }
 
   ngOnInit(): void {
   }
@@ -32,7 +31,6 @@ export class MsgListComponent implements OnInit, OnChanges {
   public capitalize(word: string) {
     return word[0].toUpperCase() + word.substring(1).toLowerCase();
   }
-
 }
 
 

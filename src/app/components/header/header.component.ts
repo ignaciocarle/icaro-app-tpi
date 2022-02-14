@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 
 import { UsersService } from 'src/app/services/users.service';
 import { SharedService } from 'src/app/services/shared.service';
-import { User } from 'src/app/interfaces/users';
 
 @Component({
   selector: 'app-header',
@@ -28,9 +27,4 @@ export class HeaderComponent implements OnInit {
     console.log("Logout exitoso!");//////////
     this.router.navigateByUrl('/login');
   }
-
-  //////////////////////////////////
-  //public testGetUsers(): void {
-  //  console.log(this.usersService.getUsersList());
-  //}
 }

@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedService } from 'src/app/services/shared.service';
-import { UsersService } from 'src/app/services/users.service';
-
-
 
 @Component({
   selector: 'app-home',

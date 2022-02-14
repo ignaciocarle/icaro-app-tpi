@@ -1,16 +1,16 @@
 //COMPONENTES
 
 import { AppComponent } from './app.component';
-import { LoginComponent } from './components/login/login.component';
 import { HeaderComponent } from './components/header/header.component';
-import { FooterComponent } from './components/footer/footer.component';
-import { HomeComponent } from './components/home/home.component';
-import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { HomeComponent } from './components/home/home.component';
+import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { MessagesComponent } from './components/messages/messages.component';
-import { InboxComponent } from './components/messages/inbox/inbox.component';
-import { SentComponent } from './components/messages/sent/sent.component';
+import { SidebarComponent } from './components/messages/sidebar/sidebar.component';
+import { MsgListComponent } from './components/messages/msg-list/msg-list.component';
+import { InboxComponent } from './components/messages/msg-list/inbox/inbox.component';
+import { SentComponent } from './components/messages/msg-list/sent/sent.component';
 import { NewComponent } from './components/messages/new/new.component';
 
 //MODULOS
@@ -26,14 +26,12 @@ import { CookieService } from 'ngx-cookie-service';
 import { UsersService } from './services/users.service';
 import { SharedService } from './services/shared.service';
 import { MessagesService } from './services/messages.service';
-import { MsgListComponent } from './components/messages/msg-list/msg-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HeaderComponent,
-    FooterComponent,
     HomeComponent,
     SidebarComponent,
     PageNotFoundComponent,

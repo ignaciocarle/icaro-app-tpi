@@ -1,5 +1,5 @@
 .header {
-  border-bottom: 3px black solid;
+  border-bottom: 3px solid var(--bs-primary);
 }
 
 .header a {

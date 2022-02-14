@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+
+import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-
-import { NewUser, User, LoggingUser } from '../interfaces/users';
-
 import { SharedService } from './shared.service';
 import { CookieService } from 'ngx-cookie-service';
+
+import { NewUser, User, LoggingUser } from '../interfaces/users';
 
 @Injectable({
   providedIn: 'root'

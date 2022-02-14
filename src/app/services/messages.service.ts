@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-import { MailboxCollection, Message, NewMessage } from '../interfaces/messages';
-
+import { HttpClient } from '@angular/common/http';
 import { SharedService } from './shared.service';
 import { UsersService } from './users.service';
+
+import { MailboxCollection, Message, NewMessage } from '../interfaces/messages';
 import { User } from '../interfaces/users';
 
 @Injectable({

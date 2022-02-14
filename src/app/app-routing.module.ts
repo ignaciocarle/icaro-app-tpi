@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './components/home/home.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { MessagesComponent } from './components/messages/messages.component';
-import { InboxComponent } from './components/messages/inbox/inbox.component';
-import { SentComponent } from './components/messages/sent/sent.component';
+import { InboxComponent } from './components/messages/msg-list/inbox/inbox.component';
+import { SentComponent } from './components/messages/msg-list/sent/sent.component';
 import { NewComponent } from './components/messages/new/new.component';
 
 const routes: Routes = [

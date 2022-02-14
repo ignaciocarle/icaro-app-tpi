@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
-import { NewUser } from 'src/app/interfaces/users';
-
-import { UsersService } from 'src/app/services/users.service';
 import { Router } from '@angular/router';
+import { UsersService } from 'src/app/services/users.service';
+
+import { NewUser } from 'src/app/interfaces/users';
 
 @Component({
   selector: 'app-register',
