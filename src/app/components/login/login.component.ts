@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+
+import { LoggingUser } from 'src/app/interfaces/users';
+
 import { UsersService } from 'src/app/services/users.service';
 import { Router } from '@angular/router';
-
-import { User } from 'src/app/interfaces/users';
 
 @Component({
   selector: 'app-login',
@@ -11,16 +13,16 @@ import { User } from 'src/app/interfaces/users';
 })
 
 export class LoginComponent implements OnInit {
-  //llevar todo esto y el register a reactive forms
-  public username: string = "";
-  public password: string = "";
-  public success: boolean = false;
-  public missingInfo: boolean = false;
 
+  public loginForm: FormGroup = this.fb.group({
+    username: "",
+    password: "",
+  } as LoggingUser, { validators: [Validators.minLength(2), Validators.required] })
 
-
-  constructor(private usersService: UsersService,
-    private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private usersService: UsersService) {
 
     if (!!this.usersService.getCurrentUser()) {
       this.router.navigateByUrl('/messages/inbox')
@@ -30,30 +32,13 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public login(): void {//llevar toda esta logica al servicio de usuarios
-    const loggingUser: User = {
-      username: this.username,
-      password: this.password,
+  public submitLoginData(): void {
+    const loggingUser: LoggingUser = {
+      username: this.loginForm.controls["username"].value,
+      password: this.loginForm.controls["password"].value
     };
 
-    this.usersService.login(loggingUser).subscribe({
-      next: (response: any) => {
-        this.success = response.loginSuccesful;
-        if (response.loginSuccesful === true) {
-          this.usersService.setCurrentUser(loggingUser.username)
-          this.router.navigateByUrl('/messages/inbox')
-        } else {
-          this.password = ""
-          alert("Incorrect User or password. Please try again.")
-        }
-        console.log(response.message);///////////////
-
-      },
-      error: (e) => {
-        this.missingInfo = true
-        alert("Please enter Username and Password.")
-        console.log(`ERROR: ${e.error.text}`);/////////////////
-      }
-    })
+    this.usersService.login(loggingUser);
+    this.loginForm.controls["password"].reset();
   }
 }

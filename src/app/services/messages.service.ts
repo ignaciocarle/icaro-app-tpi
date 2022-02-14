@@ -6,6 +6,7 @@ import { MailboxCollection, Message, NewMessage } from '../interfaces/messages';
 
 import { SharedService } from './shared.service';
 import { UsersService } from './users.service';
+import { User } from '../interfaces/users';
 
 @Injectable({
   providedIn: 'root'
@@ -47,8 +48,8 @@ export class MessagesService {
     msgArray.forEach((msg: Message) => {
       const transformedMessage: Message = {
         id: msg.id,
-        senderId: this.usersService.getUserById(msg.senderId),
-        receiverId: this.usersService.getUserById(msg.receiverId),
+        senderId: this.usersService.getUserById(msg.senderId as keyof User),
+        receiverId: this.usersService.getUserById(msg.receiverId as keyof User),
         text: msg.text
       }
       transformedMsgArray.push(transformedMessage)
@@ -60,8 +61,8 @@ export class MessagesService {
     const observer = {
       next: (response: any) => {
         this.mailboxes[identifier].data = this.transformMessages(response);
-        console.log(`Lista de mensajes %c"${identifier}"%c desde setMailbox`, "color:red;", "");/////
-        console.log(this.mailboxes[identifier].data);/////////////////////////////////////////
+        //console.log(`Lista de mensajes %c"${identifier}"%c desde setMailbox`, "color:red;", "");/////
+        //console.log(this.mailboxes[identifier].data);/////////////////////////////////////////
       },
       error: (e: any) => {
         console.log(`ERROR al recuperar los mensajes de ${identifier}`);
@@ -82,10 +83,10 @@ export class MessagesService {
     return this.mailboxes[identifier].data;
   }
 
-  public sendMessage(newMsg: NewMessage): void {/////////////////////////////////// pasar a sintaxis de observador
+  public sendMessage(newMsg: NewMessage): void {
     const observer = {
       next: (r: any) => {
-        console.log("mensaje enviado con éxito");
+        console.log("Mensaje enviado con éxito");
       },
       error: (e: any) => {
         console.log(e.error.text);

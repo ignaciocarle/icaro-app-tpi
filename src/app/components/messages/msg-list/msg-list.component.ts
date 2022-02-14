@@ -18,10 +18,7 @@ export class MsgListComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(): void {
-    console.log(this.identifier);
-
     this.refresh();
-
   }
 
   public refresh(): void {
@@ -37,3 +34,5 @@ export class MsgListComponent implements OnInit, OnChanges {
   }
 
 }
+
+

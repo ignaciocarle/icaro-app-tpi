@@ -12,15 +12,17 @@ import { MessagesService } from 'src/app/services/messages.service';
   templateUrl: './new.component.html',
   styleUrls: ['./new.component.css']
 })
+
 export class NewComponent implements OnInit {
 
   public usersList!: User[];
   public newMsgForm: FormGroup = this.fb.group({
     receiverId: "",
     text: ""
-  }, { validators: [Validators.minLength(2), Validators.required] });
+  } as NewMessage, { validators: [Validators.minLength(2), Validators.required] });
 
-  constructor(private fb: FormBuilder,
+  constructor(
+    private fb: FormBuilder,
     private usersService: UsersService,
     private messagesService: MessagesService) {
 
@@ -29,7 +31,6 @@ export class NewComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 
   private getUsers(): void {
     this.usersList = this.usersService.getUsersList()
@@ -44,8 +45,5 @@ export class NewComponent implements OnInit {
     this.messagesService.sendMessage(message)
     this.newMsgForm.controls["receiverId"].setValue("")
     this.newMsgForm.controls["text"].setValue("")
-
   }
-
-
 }

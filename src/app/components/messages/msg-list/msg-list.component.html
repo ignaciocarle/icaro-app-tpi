@@ -26,5 +26,11 @@
       </tr>
     </tbody>
   </table>
+  <h5
+    class="mb-3"
+    *ngIf="!this.messagesService.getMailbox(this.identifier).length"
+  >
+    You dont have any {{ this.identifier }} messages
+  </h5>
   <button class="btn btn-primary" (click)="this.refresh()">Refresh</button>
 </div>

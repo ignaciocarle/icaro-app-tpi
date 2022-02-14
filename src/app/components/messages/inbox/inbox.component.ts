@@ -11,20 +11,8 @@ export class InboxComponent implements OnInit {
 
   public identifier: keyof MailboxCollection = "inbox";
 
-
-  constructor(public messagesService: MessagesService) {
-
-    this.refresh();
-  }
+  constructor(public messagesService: MessagesService) { }
 
   ngOnInit(): void {
-  }
-
-  public refresh(): void {
-    this.messagesService.refresh(this.identifier);
-  }
-
-  public deleteMessage(id: string): void {
-    this.messagesService.deleteMessage(id as keyof Message, this.identifier)
   }
 }

@@ -1,37 +1,36 @@
 <div class="p-4 d-flex flex-column align-items-center">
+  <h3>Login</h3>
   <form
     class="login-form col mb-3 d-flex flex-column align-items-stretch"
-    action="post"
+    [formGroup]="loginForm"
   >
     <div class="mb-3">
       <label for="username" class="form-label"> Username </label>
       <input
         type="text"
-        class="form-control"
         id="username"
-        [(ngModel)]="username"
+        class="form-control"
         name="username"
+        formControlName="username"
         placeholder="Username"
-        required
       />
     </div>
+
     <div class="mb-3">
       <label for="password" class="form-label"> Password </label>
       <input
         type="password"
-        class="form-control"
         id="password"
-        [(ngModel)]="password"
+        class="form-control"
         name="password"
+        formControlName="password"
         placeholder="Password"
-        required
       />
     </div>
-    <button type="submit" class="btn btn-primary" (click)="login()">
-      Login
-    </button>
-    <span class="align-self-center"
-      >Don't have an account? <a routerLink="/register">Sign up</a></span
-    >
+
+    <button class="btn btn-primary" (click)="submitLoginData()">Login</button>
   </form>
+  <p class="align-self-center">
+    Don't have an account? <a routerLink="/register">Sign up</a>
+  </p>
 </div>

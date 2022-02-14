@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
-import { User } from '../interfaces/users';
+import { NewUser, User, LoggingUser } from '../interfaces/users';
 
 import { SharedService } from './shared.service';
 import { CookieService } from 'ngx-cookie-service';
@@ -15,24 +16,25 @@ export class UsersService {
   private usersList!: User[];
 
   constructor(private http: HttpClient,
+    private router: Router,
     private sharedService: SharedService,
     private cookies: CookieService) {
+
     this.usersList = this.getUsersList()
   }
 
   //metodos de la solicitud a la API
-  public login(user: User): Observable<any> {
+  private attemptLogin(user: LoggingUser): Observable<any> {
     return this.http.post(`${this.sharedService.API_PATH}/login`, user);
   }
 
-  public registerUser(newUser: User): Observable<any> {
+  public attemptRegisterUser(newUser: NewUser): Observable<any> {
     return this.http.post(`${this.sharedService.API_PATH}/users`, newUser);
   }
 
   private fetchUsers(): Observable<any> {
     return this.http.get(`${this.sharedService.API_PATH}/users`);
   }
-
 
   //metodos de manejo de datos
   private setUsersList(): void {
@@ -55,19 +57,56 @@ export class UsersService {
     this.usersList = fetched
   }
 
-
   //metodos publicos
   public getUsersList(): User[] {
     this.setUsersList()
     return this.usersList;
   }
 
-  public getUserById(id: string | undefined): string | undefined {/////////////hacer un find o algo aca
-    return this.usersList.find((x) => x.id === id)?.username
+  public getUserById(id: keyof User): keyof User {
+    return this.usersList.find((x) => x.id === id)?.username as keyof User
+  }
+
+  public login(user: LoggingUser): void {
+    const observer = {
+      next: (r: any) => {
+        if (!r.loginSuccesful) {
+          alert("Incorrect username or password. Please try again.")
+          return
+        }
+        this.setCurrentUser(user.username as keyof LoggingUser)
+        this.router.navigateByUrl('/messages/inbox')
+      },
+      error: (e: any) => {
+        alert("Please enter a valid username and password")
+        console.log(e.error.text);
+      }
+    }
+
+    this.attemptLogin(user).subscribe(observer)
+  }
+
+  public registerUser(newUser: NewUser): void {
+    const observer = {
+      next: (r: any) => {
+        alert("Registration succesful");
+        console.log("Usuario registrado con éxito");
+        this.login({
+          username: newUser.username,
+          password: newUser.password
+        });
+      },
+      error: (e: any) => {
+        alert(e.error.text)
+        console.log(e.error.text);
+      }
+    }
+
+    this.attemptRegisterUser(newUser).subscribe(observer)
   }
 
   //metodos de cookies
-  public setCurrentUser(token: string): void {
+  public setCurrentUser(token: keyof User): void {
     this.cookies.set("username", token, undefined, "/");
     this.sharedService.currentUser = token;
     //console.log(`currentUser = ${token}`);/////////////////////

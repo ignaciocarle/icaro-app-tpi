@@ -1,11 +1,11 @@
 <div class="p-4 d-flex flex-column align-items-center">
   <h3>New Message</h3>
   <form
-    [formGroup]="newMsgForm"
     class="new-message-form container-fluid mb-3 d-flex flex-column"
+    [formGroup]="newMsgForm"
   >
     <div class="mb-2">
-      <label for="receiver"><h5>Receiver</h5> </label>
+      <label for="receiver" class="form-label"><h5>Receiver</h5> </label>
       <select class="form-select" id="receiver" formControlName="receiverId">
         <option selected hidden value="">Select a receiver</option>
         <option *ngFor="let item of this.usersList" [value]="item.id">
@@ -15,7 +15,7 @@
     </div>
 
     <div class="mb-2">
-      <label for="message"><h5>Message</h5> </label>
+      <label for="message" class="form-label"><h5>Message</h5> </label>
       <textarea
         class="form-control"
         id="message"

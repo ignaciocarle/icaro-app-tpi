@@ -1,18 +1,18 @@
 <div class="p-4 d-flex flex-column align-items-center">
+  <h3>User Registration</h3>
   <form
     class="register-form col mb-3 d-flex flex-column align-items-stretch"
-    action="post"
+    [formGroup]="newUserForm"
   >
     <div class="mb-3">
       <label for="username" class="form-label"> Username </label>
       <input
         type="text"
-        class="form-control"
         id="username"
-        [(ngModel)]="username"
+        class="form-control"
         name="username"
+        formControlName="username"
         placeholder="Username"
-        required
       />
     </div>
 
@@ -20,12 +20,11 @@
       <label for="firstName" class=""> First Name </label>
       <input
         type="text"
-        class="form-control"
         id="firstName"
-        [(ngModel)]="firstName"
+        class="form-control"
         name="firstName"
+        formControlName="firstName"
         placeholder="First Name"
-        required
       />
     </div>
 
@@ -33,12 +32,11 @@
       <label for="lastName" class=""> Last Name </label>
       <input
         type="text"
-        class="form-control"
         id="lastName"
-        [(ngModel)]="lastName"
+        class="form-control"
         name="lastName"
+        formControlName="lastName"
         placeholder="Last Name"
-        required
       />
     </div>
 
@@ -46,12 +44,11 @@
       <label for="password" class=""> Password </label>
       <input
         type="password"
-        class="form-control"
         id="password"
-        [(ngModel)]="password"
+        class="form-control"
         name="password"
+        formControlName="password"
         placeholder="Password"
-        required
       />
     </div>
 
@@ -59,12 +56,11 @@
       <label for="country" class=""> Country </label>
       <input
         type="text"
-        class="form-control"
         id="country"
-        [(ngModel)]="country"
+        class="form-control"
         name="country"
+        formControlName="country"
         placeholder="Country"
-        required
       />
     </div>
 
@@ -72,21 +68,15 @@
       <label for="city" class=""> City </label>
       <input
         type="text"
-        class="form-control"
         id="city"
-        [(ngModel)]="city"
+        class="form-control"
         name="city"
+        formControlName="city"
         placeholder="City"
-        required
       />
     </div>
 
-    <button type="submit" class="btn btn-primary" (click)="registerUser()">
-      Register
-    </button>
-    <span class="align-self-center">
-      Return to <a routerLink="/login">Login</a>
-    </span>
+    <button class="btn btn-primary" (click)="submitNewUser()">Register</button>
   </form>
-  <div class></div>
+  <p class="align-self-center">Return to <a routerLink="/login">Login</a></p>
 </div>

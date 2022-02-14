@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+
+import { NewUser } from 'src/app/interfaces/users';
+
 import { UsersService } from 'src/app/services/users.service';
 import { Router } from '@angular/router';
-
-import { User } from 'src/app/interfaces/users';
 
 @Component({
   selector: 'app-register',
@@ -12,46 +14,39 @@ import { User } from 'src/app/interfaces/users';
 
 export class RegisterComponent implements OnInit {
 
-  public username: string = "";
-  public firstName: string = "";
-  public lastName: string = "";
-  public password: string = "";
-  public country: string = "";
-  public city: string = "";
+  public newUserForm: FormGroup = this.fb.group({
+    username: "",
+    firstName: "",
+    lastName: "",
+    password: "",
+    country: "",
+    city: ""
+  } as NewUser, { validators: [Validators.minLength(2), Validators.required] })
 
-  constructor(private usersService: UsersService,
-    private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private usersService: UsersService) {
 
     if (!!this.usersService.getCurrentUser()) {
-      this.router.navigateByUrl('/messages')
+      this.router.navigateByUrl('/messages/inbox')
     }
   }
 
   ngOnInit(): void {
   }
 
-  public registerUser(): void {//llevar toda esta logica al servicio de usuarios
-    const User: User = {
-      username: this.username,
-      firstName: this.firstName,
-      lastName: this.lastName,
-      password: this.password,
-      country: this.country,
-      city: this.city
+  public submitNewUser(): void {
+    const newUser: NewUser = {
+      username: this.newUserForm.controls["username"].value,
+      firstName: this.newUserForm.controls["firstName"].value,
+      lastName: this.newUserForm.controls["lastName"].value,
+      password: this.newUserForm.controls["password"].value,
+      country: this.newUserForm.controls["country"].value,
+      city: this.newUserForm.controls["city"].value
     };
 
-    this.usersService.registerUser(User).subscribe({
-      next: (response: any) => {
-
-        console.log(response.users);
-
-        this.router.navigateByUrl('/home')
-      },
-      error: (e: any) => {
-        this.password = "";
-
-        console.log(e.error.text);
-      }
-    })
+    this.usersService.registerUser(newUser);
+    this.newUserForm.controls["password"].reset();
   }
 }
